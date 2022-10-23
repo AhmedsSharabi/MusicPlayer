@@ -16,37 +16,19 @@ class PlayerViewModel: ObservableObject {
     }
 }
 
-struct Music {
+class Music {
     let id = UUID()
-    var title: String
-    let description: String
-    let duration: TimeInterval
     let track: String
-    let imaage: String
+    let isLiked: Bool
     
-    static let data = Music(title: "", description: "", duration: 255, track: "", imaage: "")
+    
+    init(track: String, isLiked: Bool) {
+        self.track = track
+        self.isLiked = isLiked
+    }
+    static let example = Music(track: "1", isLiked: false)
 }
 
 
 
 
-extension DateComponentsFormatter {
-    static let abrivatd: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = .abbreviated
-        return formatter
-    }()
-}
-
-extension DateComponentsFormatter {
-    static let positional: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        
-        formatter.allowedUnits = [.minute, .second]
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
-        return formatter
-    }()
-}

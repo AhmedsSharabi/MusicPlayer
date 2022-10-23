@@ -13,6 +13,7 @@
 		16351CDC29038B0800D1C58F /* FAMA.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 16351CDB29038B0800D1C58F /* FAMA.mp3 */; };
 		16351CDE2904171900D1C58F /* 3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 16351CDD2904171900D1C58F /* 3.mp3 */; };
 		16351CE22904437C00D1C58F /* 4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 16351CE12904437C00D1C58F /* 4.mp3 */; };
+		16351CE42905710400D1C58F /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16351CE32905710400D1C58F /* Extentions.swift */; };
 		1686280528FEF39B001D69B1 /* MusicPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686280428FEF39B001D69B1 /* MusicPlayerApp.swift */; };
 		1686280728FEF39B001D69B1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1686280628FEF39B001D69B1 /* ContentView.swift */; };
 		1686280928FEF39D001D69B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1686280828FEF39D001D69B1 /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		16351CDB29038B0800D1C58F /* FAMA.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FAMA.mp3; sourceTree = "<group>"; };
 		16351CDD2904171900D1C58F /* 3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 3.mp3; sourceTree = "<group>"; };
 		16351CE12904437C00D1C58F /* 4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 4.mp3; sourceTree = "<group>"; };
+		16351CE32905710400D1C58F /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		1686280128FEF39B001D69B1 /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1686280428FEF39B001D69B1 /* MusicPlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerApp.swift; sourceTree = "<group>"; };
 		1686280628FEF39B001D69B1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				1686280428FEF39B001D69B1 /* MusicPlayerApp.swift */,
 				1686280628FEF39B001D69B1 /* ContentView.swift */,
 				1686281428FEF686001D69B1 /* PlayerView.swift */,
+				16351CE32905710400D1C58F /* Extentions.swift */,
 				16351CD7290378FF00D1C58F /* LyricsView.swift */,
 				1686281628FF1694001D69B1 /* PlayerViewModel.swift */,
 				1686281828FF175E001D69B1 /* AudioManager.swift */,
@@ -197,6 +200,7 @@
 				1686280528FEF39B001D69B1 /* MusicPlayerApp.swift in Sources */,
 				16351CD8290378FF00D1C58F /* LyricsView.swift in Sources */,
 				1686281528FEF686001D69B1 /* PlayerView.swift in Sources */,
+				16351CE42905710400D1C58F /* Extentions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
