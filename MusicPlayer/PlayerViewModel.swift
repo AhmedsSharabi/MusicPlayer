@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class PlayerViewModel: ObservableObject {
     private(set) var music: Music
@@ -17,7 +18,7 @@ class PlayerViewModel: ObservableObject {
 
 struct Music {
     let id = UUID()
-    let title: String
+    var title: String
     let description: String
     let duration: TimeInterval
     let track: String
@@ -25,6 +26,8 @@ struct Music {
     
     static let data = Music(title: "", description: "", duration: 255, track: "", imaage: "")
 }
+
+
 
 
 extension DateComponentsFormatter {
