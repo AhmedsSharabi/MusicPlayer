@@ -8,16 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    var playerVM: PlayerViewModel
+    @EnvironmentObject var audioManger: AudioManager
+    @EnvironmentObject var trackInfo: TrackInformation
     var body: some View {
-        PlayerView(playerVM: playerVM )
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static let musicVM = PlayerViewModel(music: Music.data)
-    static var previews: some View {
-        ContentView(playerVM: musicVM)
-            .environmentObject(AudioManager() )
+        PlayerView()
     }
 }

@@ -5,108 +5,27 @@
 //  Created by Ahmed Sharabi on 18/10/2022.
 //
 
-import Foundation
 import AVKit
+import Foundation
 import SwiftUI
 
 final class AudioManager: ObservableObject {
     var player: AVAudioPlayer?
-    
     @Published var isPlaying = false
-    
     @Published var isLooping = false
     
-    
-    func metaDataTitle(track: String) async -> Any {
-        do {
-            guard let url = Bundle.main.url(forResource: track, withExtension: "mp3") else {
-                print("Resource not found")
-                return "error"
-            }
-            let asset = AVAsset(url: url)
-            let metadata = try await asset.load(.metadata)
-            let titleItems = AVMetadataItem.metadataItems(from: metadata,
-                                                          filteredByIdentifier: .commonIdentifierTitle)
-            guard let item = titleItems.first else { return "error" }
-            let print = try await item.load(.value)
-            
-            return print!
-        } catch {
-            return "error"
-        }
+    init(player: AVAudioPlayer? = nil, isPlaying: Bool = false, isLooping: Bool = false) {
+        self.player = player
+        self.isPlaying = isPlaying
+        self.isLooping = isLooping
     }
     
-    func metaDataArtist(track: String) async -> Any {
-        do {
-            guard let url = Bundle.main.url(forResource: track, withExtension: "mp3") else {
-                print("Resource not found")
-                return "error"
-            }
-            let asset = AVAsset(url: url)
-            let metadata = try await asset.load(.metadata)
-            let titleItems = AVMetadataItem.metadataItems(from: metadata,
-                                                          filteredByIdentifier: .commonIdentifierArtist)
-            guard let item = titleItems.first else { return "error" }
-            let print = try await item.load(.value)
-            
-            return print!
-        } catch {
-            return "error"
-        }
-    }
-    
-    func metaDataLyrics(track: String) async -> String?{
-        do {
-            guard let url = Bundle.main.url(forResource: track, withExtension: "mp3") else {
-                print("Resource not found")
-                return "error"
-            }
-            let asset = AVAsset(url: url)
-            let metadata = try await asset.load(.lyrics)
-            
-            return metadata
-        } catch {
-            return "error"
-        }
-    }
-
-    
-    func metaDataImage(track: String) async -> Data? {
-        do {
-            guard let url = Bundle.main.url(forResource: track, withExtension: "mp3") else {
-                print("Resource not found")
-                fatalError()
-            }
-            let asset = AVAsset(url: url)
-            let metadata = try await asset.load(.metadata)
-            let titleItems = AVMetadataItem.metadataItems(from: metadata,
-                                                          filteredByIdentifier: .commonIdentifierArtwork)
-            guard let item = titleItems.first else { fatalError()}
-            let print = try await item.load(.dataValue)
-            
-            return print
-        } catch {
-            fatalError()
-        }
-    }
-    
-    func changeVolume(value: DragGesture.Value) {
-        if value.location.x >= 0 && value.location.x <= UIScreen.main.bounds.width - 10 {
-            let pregress = value.location.x / UIScreen.main.bounds.width - 180
-            player?.volume = Float(pregress)
-//            withAnimation(Animation.linear(duration: 0.1)){ value.location.x }
-            
-        }
-    }
-    
-    func startPlayer(track: String, isPreview: Bool = false) {
+    func startPlayer(track: String) {
         guard let url = Bundle.main.url(forResource: track, withExtension: "mp3") else {
             print("Resource not found")
             return
         }
-        
         do {
-            
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
             player = try AVAudioPlayer(contentsOf: url)
@@ -116,34 +35,51 @@ final class AudioManager: ObservableObject {
             print("Failed to initilize player")
         }
     }
+    
+    func metaData(track: String) async -> Music {
+        if let url = Bundle.main.url(forResource: track, withExtension: "mp3") {
+            do {
+                let asset = AVAsset(url: url)
+                let metadata = try await asset.load(.metadata)
+                let titleData = AVMetadataItem.metadataItems(from: metadata,
+                                                                  filteredByIdentifier: .commonIdentifierTitle)
+                let artistData = AVMetadataItem.metadataItems(from: metadata,
+                                                              filteredByIdentifier: .commonIdentifierArtist)
+                let imageData = AVMetadataItem.metadataItems(from: metadata,
+                                                              filteredByIdentifier: .commonIdentifierArtwork)
+                let lyrics = try await asset.load(.lyrics)
+                
+                guard let titleItem = titleData.first else { fatalError() }
+                let title = try await titleItem.load(.stringValue)
+                guard let artistItem = artistData.first else { fatalError() }
+                let artist = try await artistItem.load(.stringValue)
+                guard let imageItem = imageData.first else { fatalError() }
+                let image: UIImage?
+                if let uiimage = (try await imageItem.load(.dataValue)) {
+                    let tryImage = UIImage(data: uiimage)
+                    image = tryImage
+                } else {
+                    let tryImage = UIImage(named: "12")
+                    image = tryImage
+                }
+                
+                let meta = Music(trackname: track, title: title ?? "No Title", artist: artist ?? "No Artist", image: image! , lyrics: lyrics ?? "This trak has no lyrics", isLiked: false)
+                return meta
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+        }
+        fatalError()
+    }
     func playPause() {
         guard let player = player else { return }
         if player.isPlaying {
             player.pause()
-            print("pause")
             isPlaying = false
         } else {
             player.play()
-            print("play")
             isPlaying = true
         }
-        
     }
-    func stop() {
-        guard let player = player else { return }
-        
-        if player.isPlaying {
-            player.stop()
-            isPlaying = false
-        }
-    }
-    
-    func toggleLoop() {
-        guard let player = player else { return }
-        player.numberOfLoops = player.numberOfLoops == 0 ? -1 : 0
-        isLooping = player.numberOfLoops != 0
-        
-    }
-
-    
 }
